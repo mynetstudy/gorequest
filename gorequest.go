@@ -898,7 +898,8 @@ func (s *SuperAgent) SendFile(file interface{}, args ...string) *SuperAgent {
 		fieldname = strings.TrimSpace(args[1])
 	}
 	if fieldname == "file" || fieldname == "" {
-		fieldname = "file" + strconv.Itoa(len(s.FileData)+1)
+		//@dasn fix rename file name error
+		//fieldname = "file" + strconv.Itoa(len(s.FileData)+1)
 	}
 
 	switch v := reflect.ValueOf(file); v.Kind() {
@@ -1328,7 +1329,7 @@ func (s *SuperAgent) MakeRequest() (*http.Request, error) {
 			h := make(textproto.MIMEHeader)
 			fieldName = strings.Replace(strings.Replace(fieldName, "\\", "\\\\", -1), `"`, "\\\"", -1)
 			h.Set("Content-Disposition", fmt.Sprintf(`form-data; name="%s"`, fieldName))
-			h.Set("Content-Type", "application/json")
+			//h.Set("Content-Type", "application/json")
 			fw, _ := mw.CreatePart(h)
 			contentJson, err := json.Marshal(s.SliceData)
 			if err != nil {
